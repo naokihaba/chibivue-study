@@ -1,5 +1,4 @@
-import { text } from "stream/consumers";
-import { RendererOptions } from "../runtime-core/renderer";
+import { RendererOptions } from "../runtime-core";
 
 // Node = DOM Node のこと
 export const nodeOps: RendererOptions<Node> = {
