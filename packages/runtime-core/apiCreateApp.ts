@@ -6,19 +6,21 @@ export interface App<HostElement = any> {
 }
 
 export type CreateAppFunction<HostElement> = (
-  rootComponent: Component
+  rootComponent: Component,
 ) => App<HostElement>;
 
 export function createAppAPI<HostElement>(
-  render: RootRenderFunction<HostElement>
+  render: RootRenderFunction<HostElement>,
 ): CreateAppFunction<HostElement> {
-  return function createApp(rootComponent){
-    const app:App = {
+  return function createApp(rootComponent) {
+    const app: App = {
       mount(rootContainer: HostElement) {
-        const message = rootComponent.render!();
-        render(message, rootContainer);
-      }
-    }
+        const vnode = rootComponent.render!();
+        console.log(vnode); // ログを見てみる
+
+        render(vnode, rootContainer);
+      },
+    };
     return app;
-  }
+  };
 }
