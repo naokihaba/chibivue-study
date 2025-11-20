@@ -10,7 +10,7 @@ export interface RendererElement extends RendererNode {}
 
 export type RootRenderFunction<HostElement = RendererElement> = (
   message: string,
-  container: HostElement
+  container: HostElement,
 ) => void;
 
 export function createRenderer(options: RendererOptions) {
@@ -18,7 +18,7 @@ export function createRenderer(options: RendererOptions) {
 
   const render: RootRenderFunction = (message, container) => {
     hostSetElementText(container, message);
-  }
+  };
 
   return { render };
 }

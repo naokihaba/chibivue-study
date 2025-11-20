@@ -1,7 +1,7 @@
-import { createApp } from "chibivue"
+import { createApp } from "chibivue";
 
 const app = createApp({
-  render: () => 'Hello World',
-})
+  render: () => "Hello World",
+});
 
-app.mount('#app')
+app.mount("#app");
