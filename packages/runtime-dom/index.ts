@@ -5,7 +5,10 @@ import {
 } from '../runtime-core'
 import { nodeOps } from './nodeOps'
 
+// rendererにnodeOpsを渡して作成
 const { render } = createRenderer(nodeOps)
+
+// createAppAPIにrender関数を渡してcreateAppを作成
 const _createApp = createAppAPI(render)
 
 export const createApp = ((...args) => {
