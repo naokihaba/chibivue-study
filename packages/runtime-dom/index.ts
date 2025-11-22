@@ -4,9 +4,13 @@ import {
   createRenderer,
 } from "../runtime-core";
 import { nodeOps } from "./nodeOps";
+import { patchProp } from "./patchProp";
 
 // rendererにnodeOpsを渡して作成
-const { render } = createRenderer(nodeOps);
+const { render } = createRenderer({
+  ...nodeOps,
+  patchProp,
+});
 
 // createAppAPIにrender関数を渡してcreateAppを作成
 const _createApp = createAppAPI(render);
