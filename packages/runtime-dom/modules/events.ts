@@ -1,3 +1,5 @@
+// EventListener is a built-in interface
+// Event を受け取り処理するためのインターフェース
 interface Invoker extends EventListener {
   value: EventValue;
 }
@@ -25,7 +27,9 @@ export function patchEvent(
   rawName: string,
   value: EventValue | null,
 ) {
+  // DOM要素に_veiプロパティを追加し、イベント名→invokerのマップを保持
   const invokers = el._vei || (el._vei = {});
+
   const existingInvoker = invokers[rawName];
   if (value && existingInvoker) {
     // 更新
