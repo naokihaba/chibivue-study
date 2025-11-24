@@ -15,10 +15,14 @@ export function createAppAPI<HostElement>(
   return function createApp(rootComponent) {
     const app: App = {
       mount(rootContainer: HostElement) {
-        const vnode = rootComponent.render!();
-        console.log(vnode); // ログを見てみる
+        const componentRender = rootComponent.setup!();
 
-        render(vnode, rootContainer);
+        const updateComponent = () => {
+          const vnode = componentRender();
+          render(vnode, rootContainer);
+        };
+
+        updateComponent();
       },
     };
     return app;
