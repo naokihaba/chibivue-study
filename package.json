@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "cd examples/playground && pnpm i && pnpm run dev",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format": "prettier --write ."
+    "format": "oxfmt ."
   },
   "keywords": [],
   "author": "",
@@ -14,6 +14,6 @@
   "packageManager": "pnpm@10.14.0",
   "devDependencies": {
     "@types/node": "^24.10.1",
-    "prettier": "3.6.2"
+    "oxfmt": "^0.16.0"
   }
 }
