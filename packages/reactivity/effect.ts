@@ -36,7 +36,7 @@ export function track(target: object, key: unknown) {
 }
 
 export function trigger(target: object, key?: unknown) {
-  const depsMap = targetMap.get(key);
+  const depsMap = targetMap.get(target);
   if (!depsMap) return;
 
   const dep = depsMap.get(key);
