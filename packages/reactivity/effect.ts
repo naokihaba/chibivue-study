@@ -1,11 +1,14 @@
 import { createDep, Dep } from "./dep";
 
+// プロパティとReactiveEffectの集合のマップ
 type keyToDepMap = Map<any, Dep>;
 
+// 不要になったオブジェクトをガベージコレクションするためにWeakMapを使用
 const targetMap = new WeakMap<any, keyToDepMap>();
 
 export let activeEffect: ReactiveEffect | undefined;
 
+// 実行したい関数（fn）をラップして、実行時に自動で依存関係を追跡できるようにする
 export class ReactiveEffect<T = any> {
   constructor(public fn: () => T) {}
 
