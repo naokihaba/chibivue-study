@@ -49,13 +49,11 @@ export function createRenderer(options: RendererOptions) {
   const patch = (n1: VNode | null, n2: VNode, container: RendererElement) => {
     const { type } = n2;
     if (type === Text) {
-      processText(n1, n2, container);
+      processText(n1, n2, container); // テキストノード
     } else if (typeof type === "string") {
-      processElement(n1, n2, container);
+      processElement(n1, n2, container); // HTML要素 ("div", "p" など)
     } else if (typeof type === "object") {
-      processComponent(n1, n2, container);
-    } else {
-      // do nothing
+      processComponent(n1, n2, container); // コンポーネント ← 新規！
     }
   };
 
@@ -65,24 +63,24 @@ export function createRenderer(options: RendererOptions) {
     container: RendererElement,
   ) => {
     if (n1 === null) {
-      // mount
-      mountComponent(n2, container);
+      mountComponent(n2, container); // 初回マウント
     } else {
-      // update
-      updateComponent(n1, n2);
+      updateComponent(n1, n2); // 更新
     }
   };
 
   const mountComponent = (initialVNode: VNode, container: RendererElement) => {
+    // 1. コンポーネントインスタンスを生成
     const instance: ComponentInternalInstance = (initialVNode.component =
       createComponentInstance(initialVNode));
 
+    // 2. setup関数を実行してrender関数を取得
     const component = initialVNode.type as Component;
-
     if (component.setup) {
       instance.render = component.setup() as InternalRenderFunction;
     }
 
+    // 3. リアクティブエフェクトをセットアップ
     setupRenderEffect(instance, initialVNode, container);
   };
 
@@ -95,11 +93,13 @@ export function createRenderer(options: RendererOptions) {
       const { render } = instance;
 
       if (!instance.isMounted) {
+        // ===== 初回マウント =====
         const subTree = (instance.subTree = normalizeVNode(render()));
         patch(null, subTree, container);
         initialVNode.el = subTree.el;
         instance.isMounted = true;
       } else {
+        // ===== 更新処理 =====
         let { next, vnode } = instance;
 
         if (next) {
@@ -119,6 +119,8 @@ export function createRenderer(options: RendererOptions) {
         next.el = nextTree.el;
       }
     };
+
+    // ReactiveEffectでラップ → 依存関係のあるリアクティブ値が変更されると自動で再実行
     const effect = (instance.effect = new ReactiveEffect(componentUpdateFn));
     const update = (instance.update = () => effect.run()); // instance.updateに登録
     update();

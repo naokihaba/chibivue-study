@@ -1,5 +1,6 @@
 import { ComponentInternalInstance } from "./component";
 
+// 型を拡張: 文字列、Text シンボル、オブジェクト（コンポーネント）を受け付ける
 export type VNodeTypes = string | typeof Text | object;
 
 // Symbol は絶対に他の値と衝突しない一意の識別子
@@ -13,6 +14,7 @@ export interface VNode<HostNode = any> {
   // 実際のDOMノードへの参照を保持するためのフィールド
   el: HostNode | undefined;
 
+  // vnodeがコンポーネントに関連付けられている場合、そのインスタンスへの参照
   component: ComponentInternalInstance | null;
 }
 

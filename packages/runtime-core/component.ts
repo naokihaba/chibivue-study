@@ -5,14 +5,14 @@ import { VNode, VNodeChild } from "./vnode";
 export type Component = ComponentOptions;
 
 export interface ComponentInternalInstance {
-  type: Component;
-  vnode: VNode;
-  subTree: VNode;
-  next: VNode | null;
-  effect: ReactiveEffect;
-  render: InternalRenderFunction;
-  update: () => void;
-  isMounted: boolean;
+  type: Component; // コンポーネントの定義（setup関数など）
+  vnode: VNode; // コンポーネント自体を表す仮想ノード（`h(MyComponent, {}, [])`）
+  subTree: VNode; // コンポーネントの `render()` が返す仮想ノード（実際のDOM構造）
+  next: VNode | null; // 更新時の新しいVNode
+  effect: ReactiveEffect; // リアクティブエフェクト
+  render: InternalRenderFunction; // render関数
+  update: () => void; // 更新をトリガーする関数
+  isMounted: boolean; // マウント済みかどうか
 }
 
 export type InternalRenderFunction = {
