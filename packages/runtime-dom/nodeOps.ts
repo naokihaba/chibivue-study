@@ -21,4 +21,8 @@ export const nodeOps: Omit<RendererOptions<Node>, "patchProp"> = {
   insert(child: Node, parent: Node, anchor: Node | null = null) {
     parent.insertBefore(child, anchor);
   },
+
+  parentNode(node: Node) {
+    return node.parentNode;
+  },
 };
